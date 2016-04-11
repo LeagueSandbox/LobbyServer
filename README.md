@@ -1,5 +1,13 @@
 # LobyServer
 
+## Socket.IO Event Naming Convention Examples
+```
+lobby.list - Listing of all game lobbies
+lobby.create - Create a new game lobby
+lobby.edit - Modifying an existing game lobby
+lobby.delete - Delete an existing game lobby
+```
+
 ## GameMode listing
 ```
 {

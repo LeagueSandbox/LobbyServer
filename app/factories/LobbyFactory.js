@@ -2,15 +2,15 @@ function LobbyFactory(){
 
   return {
     createLobby: createLobby
-  }
+  };
 
-  function createLobby(name){
+  function createLobby(options){
     var lobby;
 
     lobby = {
-      name: name || "",
-      hostSettings: [],
-      playerSettings: []
+      name: options.name || "",
+      hostSettings: options.hostSettings || [],
+      playerSettings: options.playerSettings || []
     };
 
     return lobby;
