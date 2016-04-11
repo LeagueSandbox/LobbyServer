@@ -1,0 +1,17 @@
+{
+    "gameModes": {
+        "LeagueSandbox-Default": [
+            "Dev",
+            "1.0.2",
+            "1.0.1",
+            "1.0.0"
+        ],
+        "Mythic-Dev": [
+            "Dev"
+        ],
+        "SomeGuy-SomeMode": [
+            "0.0.2",
+            "0.0.1"
+        ]
+    }
+}

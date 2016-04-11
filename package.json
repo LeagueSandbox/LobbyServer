@@ -1,0 +1,19 @@
+{
+  "name": "lobby-server",
+  "version": "1.0.0",
+  "description": "League Sandbox Lobby Server",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LeagueSandbox/LobbyServer.git"
+  },
+  "author": "League Sandbox",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/LeagueSandbox/LobbyServer/issues"
+  },
+  "homepage": "https://github.com/LeagueSandbox/LobbyServer#readme"
+}
