@@ -1,4 +1,4 @@
-var LobbyFactory = require('./app/factories/LobbyFactory');
+var LobbyFactory = require('../factories/LobbyFactory');
 
 function LobbyManagerService(){
   var lobbies = [];
