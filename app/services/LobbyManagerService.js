@@ -25,11 +25,11 @@ function LobbyManagerService(){
   }
 
   function addLobbyToList(lobby){
-    clients.push(lobby);
+    lobbies.push(lobby);
   }
 
   function removeLobbyFromList(lobby){
-    clients.splice(clients.indexOf(lobby), 1);
+    lobbies.splice(lobbies.indexOf(lobby), 1);
   }
 }
 
