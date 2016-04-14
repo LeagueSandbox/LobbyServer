@@ -12,6 +12,9 @@
   },
   "author": "League Sandbox",
   "license": "GPL-3.0",
+  "dependencies": {
+    "socket.io": "^1.4.5"
+  },
   "bugs": {
     "url": "https://github.com/LeagueSandbox/LobbyServer/issues"
   },
