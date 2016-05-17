@@ -66,7 +66,7 @@ lobby.delete - Delete an existing game lobby
             "name": "Lives",
             "help": "How many times a player can respawn (-1 for unlimited)",
             "field": "text",
-            "type": "integer"
+            "type": "integer",
             "default": "-1",
         },
         {
@@ -74,12 +74,12 @@ lobby.delete - Delete an existing game lobby
             "help": "Global damage multiplier",
             "field": "select",
             "type": "integer",
-            "options": [
+            "options": {
                 "1x": "1",
                 "2x": "2",
                 "4x": "4",
                 "8x": "8"
-            ]
+            },
             "default": "1" // index of selected option
         },
         {
