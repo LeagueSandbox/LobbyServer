@@ -3,9 +3,10 @@ var io = require('socket.io')(port);
 var ClientManagerService = require('./app/services/ClientManagerService');
 var LobbyManagerService = require('./app/services/LobbyManagerService');
 
-console.log("League Sandbox Lobby Server");
 console.log("---------------------------");
+console.log("League Sandbox Lobby Server");
 console.log("Listening on port " + port);
+console.log("---------------------------");
 
 
 io.on('connection', function(client){
@@ -18,8 +19,10 @@ io.on('connection', function(client){
   });
 
   client.on('lobby.create', function(options){
+    console.log("New lobby created");
     var newLobby = LobbyManagerService.create(options);
-    client.emit('lobby.create', newLobby);
+    client.emit('lobbylist-add', newLobby); 
+    //We send all the info to let clients add the new server to the list
   });
 
   client.on('disconnect', function(){
