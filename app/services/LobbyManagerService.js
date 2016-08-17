@@ -7,6 +7,7 @@ function LobbyManagerService(){
   return {
     getLobbies: getLobbies,
     create: create,
+    getLobbyID: lobbyCount
   };
 
   function create(options){
