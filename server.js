@@ -22,7 +22,7 @@ io.on('connection', function(client){
     var newLobby = LobbyManagerService.create(options);
     //We send all the info to let clients add the new server to the list
     client.emit('lobbylist-add', newLobby); 
-    console.log("New lobby created with ID " + LobbyManagerService.getLobbyID);
+    console.log("New lobby created with ID " + LobbyManagerService.getLobbyId);
   });
 
   client.on('disconnect', function(){

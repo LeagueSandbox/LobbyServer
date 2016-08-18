@@ -1,12 +1,13 @@
 var LobbyFactory = require('./app/factories/LobbyFactory.js');
+var LobbyManagerService = require('./app/services/LobbyManagerService.js');
 "use strict";
-var port = 1234;
+var port = LobbyManagerService.getLobbyId;
 const io = require('socket.io')(port);
 const repl = require('repl');
 
-const name = "My Lobby";
-const creator = "molen";
-const gamemode = "URF";
+const name = "Defaul";
+const creator = 'Me';
+const gamemode = 'l';
 
 const adminSettings = [{
     binding: "available-champions",
