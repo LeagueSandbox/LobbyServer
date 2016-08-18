@@ -2,11 +2,12 @@ var LobbyFactory = require('../factories/LobbyFactory');
 
 function LobbyManagerService(){
   var lobbies = [];
-  var lobbyCount = 0;
+  var lobbyCount = 1234;
 
   return {
     getLobbies: getLobbies,
     create: create,
+    getLobbyId: lobbyCount
   };
 
   function create(options){
