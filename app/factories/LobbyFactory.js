@@ -1,18 +1,19 @@
 var child_process = require('child_process');
-function LobbyFactory(){
+var LobbyManagerService = require('../services/LobbyManagerService.js');
 
+var lobbyCount = 1234;
+exports.lobbyCount = 1234;
+
+function LobbyFactory(){
+  lobbyCount = 1234;
   return {
     createLobby: createLobby
   };
-
   function createLobby(options){
     var lobby;
-
+    exports.lobbyCount = lobbyCount;
+    
     lobby = {
-      //Just for test we disable this
-      //name: options.name || "",
-      //hostSettings: options.hostSettings || [],
-      //playerSettings: options.playerSettings || []
         name: "My Lobby",
         creator: "Me",
         playerLimit: 10,
@@ -20,15 +21,13 @@ function LobbyFactory(){
         gameMode: "LeagueSandbox-Default",
         requirePassword: false,
         address: "http://localhost",
-        port: 1234
+        port: lobbyCount
     };
 
-    //Here we execute lobby.js which will be the process
-    //var lobby = require('../../lobby.js');
     var fork = require('child_process').fork;
     var child = fork('lobby');
+    lobbyCount++;
     return lobby;
   }
 }
-
 module.exports = LobbyFactory();
