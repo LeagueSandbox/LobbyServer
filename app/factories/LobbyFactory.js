@@ -14,11 +14,11 @@ function LobbyFactory(){
     exports.lobbyCount = lobbyCount;
     
     lobby = {
-        name: "My Lobby",
-        creator: "Me",
-        playerLimit: 10,
+        name: options.name,
+        creator: options.creator,
+        playerLimit: options.playerLimit,
         playerCount: 1,
-        gameMode: "LeagueSandbox-Default",
+        gameMode: options.gamemodeName,
         requirePassword: false,
         address: "http://localhost",
         port: lobbyCount
