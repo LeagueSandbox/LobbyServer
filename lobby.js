@@ -7,7 +7,7 @@ const repl = require('repl');
 
 const name = LobbyFactory.name;
 const creator = LobbyFactory.creator;
-const gamemode =LobbyFactory.gameMode;
+const gamemode = LobbyFactory.gameMode;
 
 const adminSettings = [{
     binding: "available-champions",
