@@ -5,9 +5,9 @@ var port = LobbyManagerService.getLobbyId;
 const io = require('socket.io')(port);
 const repl = require('repl');
 
-const name = "Defaul";
-const creator = 'Me';
-const gamemode = 'l';
+const name = LobbyFactory.name;
+const creator = LobbyFactory.creator;
+const gamemode =LobbyFactory.gameMode;
 
 const adminSettings = [{
     binding: "available-champions",
