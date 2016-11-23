@@ -8,9 +8,20 @@ console.log("League Sandbox Lobby Server");
 console.log("Listening on port " + port);
 console.log("---------------------------");
 
+const connections = {};
+let playerId = 0;
+
+function broadcast(name, data) {
+    Object.keys(connections).map(x => connections[x]).forEach(conn => {
+       conn.emit(name, data); 
+    });
+}
+
 io.on('connection', function(client){
   console.log("Client connected");
   ClientManagerService.connected(client);
+  let id = playerId++;
+  connections[id] = client;
 
   client.on('lobby.list', function(){
     var lobbies = LobbyManagerService.getLobbies();
@@ -21,8 +32,8 @@ io.on('connection', function(client){
   client.on('lobby.create', function(options){
     var newLobby = LobbyManagerService.create(options);
     //We send all the info to let clients add the new server to the list
-    client.emit('lobbylist-add', newLobby); 
-    console.log("New lobby created with ID " + LobbyManagerService.getLobbyId);
+    broadcast('lobbylist-add', newLobby);
+    console.log("New lobby created with ID " + LobbyManagerService.lobbyCount);
   });
 
   client.on('disconnect', function(){

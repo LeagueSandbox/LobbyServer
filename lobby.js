@@ -1,7 +1,8 @@
 var LobbyFactory = require('./app/factories/LobbyFactory.js');
 var LobbyManagerService = require('./app/services/LobbyManagerService.js');
 "use strict";
-var port = LobbyManagerService.getLobbyId;
+
+var port = process.argv[2]; //It is argv[2] because elements 0 and 1 are already populated with env info
 const io = require('socket.io')(port);
 const repl = require('repl');
 
@@ -117,10 +118,10 @@ io.on("connection", (conn) => {
     conn.on("lobby-connect", data => {
         conn.emit("lobby-connect", {
             ok: true,
-            name: "My Lobby",
+            name: name,
             creator: creator,
 
-            gamemode: "URF"
+            gamemode: gamemode
         });
         
         const firstFree = teams.filter(t => t.playerLimit - players.filter(p => p.teamId === t.id).length > 0)[0];

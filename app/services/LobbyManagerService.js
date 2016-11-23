@@ -1,18 +1,18 @@
 var LobbyFactory = require('../factories/LobbyFactory');
+var lobbies = [];
+var lobbyCount = 1234;
 
 function LobbyManagerService(){
-  var lobbies = [];
-  var lobbyCount = 1234;
 
   return {
     getLobbies: getLobbies,
-    create: create,
-    getLobbyId: lobbyCount
+    create: create
   };
 
   function create(options){
     var newLobbyId = lobbyCount;
-    var newLobby = LobbyFactory.createLobby(options);
+    module.exports.lobbyCount = lobbyCount;
+    var newLobby = LobbyFactory.createLobby(options, lobbyCount);
     newLobby.id = newLobbyId;
     lobbyCount++;
 

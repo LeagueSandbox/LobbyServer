@@ -1,40 +1,37 @@
 var child_process = require('child_process');
 var LobbyManagerService = require('../services/LobbyManagerService.js');
 
-var lobbyCount = 1234;
-
 function LobbyFactory(){
-  lobbyCount = 1234;
+
   return {
     createLobby: createLobby
   };
-  function createLobby(options){
+  function createLobby(options, port){
     var lobby;
-    
+
     lobby = {
         name: options.name,
         creator: options.creator,
-        playerLimit: 10,
-        playerCount: 1,
+        playerLimit: options.playerLimit,
+        playerCount: 0,
         gameMode: options.gamemodeName,
         requirePassword: false,
         address: "http://localhost",
-        port: lobbyCount
+        port: port
     };
     module.exports = {
         name: options.name,
         creator: options.creator,
-        playerLimit: 2,
-        playerCount: 1,
+        playerLimit: options.playerLimit,
+        playerCount: 0,
         gameMode: options.gamemodeName,
         requirePassword: false,
         address: "http://localhost",
-        port: lobbyCount
+        port: port
     };
-
     var fork = require('child_process').fork;
-    var child = fork('lobby');
-    lobbyCount++;
+    //We start a Lobby process and we send the port
+    var child = fork('lobby', [port]);
     return lobby;
   }
 }
