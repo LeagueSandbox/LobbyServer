@@ -1,5 +1,5 @@
 # The League Sandbox project's lobby server
-Project website along with more specifications can be fround from: https://leaguesandbox.github.io/  
+Project website along with more specifications can be found from: https://leaguesandbox.github.io/  
 Project chat on Discord: https://discord.gg/0vmmZ6VAwXB05gB6
 
 # Contributing
@@ -14,6 +14,19 @@ Currently the technologies we use include:
 
 For more detailed project specifications head over to https://leaguesandbox.github.io/  
 If you're interested in contributing, come find us from [Discord](https://discord.gg/0vmmZ6VAwXB05gB6) and let us know
+
+## Running Lobby Server
+Lobby Server is, as the name says, the server counterpart for the Lobby Client. 
+
+Steps to get it up and running:
+* Run `npm install` in the project root to install all dependencies
+* Run `server.js` with node using `node server` in the project root
+
+## Project Structure
+* `server.js` is the main file of the project and manages most other components
+* `lobby.js` runs every lobby and is executed by LobbyFactory.js
+* `LobbyManagerService.js`, is the component in charge of managing lobbies
+* `LobbyFactory.js` is the component responsible for instantiating new lobbies
 
 ## Socket.IO Event Naming Convention Examples
 ```
