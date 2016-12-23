@@ -1,14 +1,20 @@
+var child_process = require('child_process');
+var fs = require('fs');
 var LobbyFactory = require('./app/factories/LobbyFactory.js');
 var LobbyManagerService = require('./app/services/LobbyManagerService.js');
 "use strict";
 
-var port = process.argv[2]; //It is argv[2] because elements 0 and 1 are already populated with env info
-const io = require('socket.io')(port);
+var lobbyPort = process.argv[2]; //It is argv[2] because elements 0 and 1 are already populated with env info
+var path = process.argv[3];
+var gameServerPort = process.argv[4];
+const io = require('socket.io')(lobbyPort);
 const repl = require('repl');
 
 const name = LobbyFactory.name;
 const creator = LobbyFactory.creator;
 const gamemode = LobbyFactory.gameMode;
+var map = 1;
+var player_id = 0;
 
 const adminSettings = [{
     binding: "available-champions",
@@ -114,16 +120,16 @@ io.on("connection", (conn) => {
     let id = playerId++;
     let player;
     connections[id] = conn;
+    player_id++;
     
     conn.on("lobby-connect", data => {
         conn.emit("lobby-connect", {
             ok: true,
             name: name,
             creator: creator,
-
             gamemode: gamemode
         });
-        
+        conn.emit("playerID", player_id);
         const firstFree = teams.filter(t => t.playerLimit - players.filter(p => p.teamId === t.id).length > 0)[0];
         sendInitialData(conn);
 
@@ -149,6 +155,9 @@ io.on("connection", (conn) => {
         }  
         
         console.log(setting.binding + " set to " + data.value);
+        if (setting.binding == "map"){
+            map = data.value;
+        }
 
         if (setting.binding === "champion") {
             player.championId = data.value;
@@ -189,6 +198,11 @@ io.on("connection", (conn) => {
         delete connections[id];
         players.splice(players.indexOf(player), 1);
         broadcast("playerlist-remove", { id: id });
+    });
+    conn.on("start-game", () => {
+        var GameFactory = require('./GameFactory.js');
+        GameFactory.startGameServer(players, gameServerPort, path, map);
+        broadcast("start-game", gameServerPort);
     });
 });
 

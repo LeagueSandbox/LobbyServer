@@ -20,6 +20,7 @@ Lobby Server is, as the name says, the server counterpart for the Lobby Client.
 
 Steps to get it up and running:
 * Run `npm install` in the project root to install all dependencies
+* Open `config.json` in `config` folder and write your GameServer.exe path
 * Run `server.js` with node using `node server` in the project root
 
 ## Project Structure

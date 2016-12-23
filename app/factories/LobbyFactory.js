@@ -6,7 +6,7 @@ function LobbyFactory(){
   return {
     createLobby: createLobby
   };
-  function createLobby(options, port){
+  function createLobby(options, port, configPath, GameServerPort){
     var lobby;
 
     lobby = {
@@ -31,7 +31,7 @@ function LobbyFactory(){
     };
     var fork = require('child_process').fork;
     //We start a Lobby process and we send the port
-    var child = fork('lobby', [port]);
+    var child = fork('lobby', [port, configPath, GameServerPort]);
     return lobby;
   }
 }
