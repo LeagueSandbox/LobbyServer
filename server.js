@@ -29,14 +29,17 @@ io.on('connection', function(client){
 
     client.on('lobby.list', function(){
         var lobbies = LobbyManagerService.getLobbies();
-        //Send all the lobbies (list)
-        client.emit('lobby.list', lobbies);
+        client.emit('lobby.list', {
+            lobbies
+        });
     });
 
     client.on('lobby.create', function(options){
         var newLobby = LobbyManagerService.create(options, path);
         //We send all the info to let clients add the new server to the list
-        broadcast('lobbylist-add', newLobby);
+        broadcast('lobbylist-add', {
+            newLobby
+        });
         console.log("New lobby created with ID " + LobbyManagerService.lobbyCount);
     });
 

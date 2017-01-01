@@ -127,9 +127,9 @@ io.on("connection", (conn) => {
             ok: true,
             name: name,
             creator: creator,
-            gamemode: gamemode
+            gamemode: gamemode,
+            playerId: player_id
         });
-        conn.emit("playerID", player_id);
         const firstFree = teams.filter(t => t.playerLimit - players.filter(p => p.teamId === t.id).length > 0)[0];
         sendInitialData(conn);
 
@@ -162,47 +162,70 @@ io.on("connection", (conn) => {
         if (setting.binding === "champion") {
             player.championId = data.value;
             broadcast("playerlist-update", { id: id, championId: data.value });
-            conn.emit("settinglist-update", { binding: "skin" });
+            conn.emit("settinglist-update", { 
+                binding: "skin" 
+            });
         }
         
         if (setting.binding === "skin") {
             player.skinIndex = data.value;
-            broadcast("playerlist-update", { id: id, skinIndex: data.value });
+            broadcast("playerlist-update", { 
+                id, 
+                skinIndex: data.value 
+            });
         }
         
         if (setting.binding === "summonerSpells") {
             player.spell1id = data.value[0];
             player.spell1id = data.value[1];
-            broadcast("playerlist-update", { id: id, spell1id: data.value[0], spell2id: data.value[1] });
+            broadcast("playerlist-update", { 
+                id, 
+                spell1id: data.value[0], 
+                spell2id: data.value[1] 
+            });
         }
             
         if (setting.host) {  
             Object.keys(connections).forEach(k => {
                 if (connections[k] !== conn) {
-                    connections[k].emit("settinglist-update", { binding: setting.binding, value: data.value });
+                    connections[k].emit("settinglist-update", { 
+                        binding: setting.binding, 
+                        value: data.value 
+                    });
                 }
             });
         }
     });
     
     conn.on("chat-message", data => {
-        broadcast("chat-message", { timestamp: new Date().getTime(), sender: player.name, message: data.message });
+        broadcast("chat-message", { 
+            timestamp: new Date().getTime(), 
+            sender: player.name, 
+            message: data.message 
+        });
     });
     
     conn.on("join-team", data => {
         player.teamId = data.team;
-        broadcast("playerlist-update", { id: id, teamId: data.team });
+        broadcast("playerlist-update", { 
+            id, 
+            teamId: data.team 
+        });
     });
     
     conn.on("disconnect", () => {
         delete connections[id];
         players.splice(players.indexOf(player), 1);
-        broadcast("playerlist-remove", { id: id });
+        broadcast("playerlist-remove", { 
+            id 
+        });
     });
     conn.on("start-game", () => {
         var GameFactory = require('./GameFactory.js');
         GameFactory.startGameServer(players, gameServerPort, path, map);
-        broadcast("start-game", gameServerPort);
+        broadcast("start-game", { 
+            gameServerPort
+        });
     });
 });
 
