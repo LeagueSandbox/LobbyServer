@@ -221,7 +221,7 @@ io.on("connection", (conn) => {
         });
     });
     conn.on("start-game", () => {
-        var GameFactory = require('./GameFactory.js');
+        var GameFactory = require('./app/factories/GameFactory.js');
         GameFactory.startGameServer(players, gameServerPort, path, map);
         broadcast("start-game", { 
             gameServerPort
