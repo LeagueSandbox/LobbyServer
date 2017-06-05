@@ -1,38 +1,26 @@
-var child_process = require('child_process');
-var LobbyManagerService = require('../services/LobbyManagerService.js');
+const child_process = require('child_process');
+const LobbyManagerService = require('../services/LobbyManagerService.js');
 
-function LobbyFactory(){
+function LobbyFactory() {
 
-  return {
-    createLobby: createLobby
-  };
-  function createLobby(options, port, configPath, GameServerPort){
-    var lobby;
-
-    lobby = {
-        name: options.name,
-        creator: options.creator,
-        playerLimit: options.playerLimit,
-        playerCount: 0,
-        gameMode: options.gamemodeName,
-        requirePassword: false,
-        address: "http://localhost",
-        port: port
+    return {
+        createLobby: createLobby
     };
-    module.exports = {
-        name: options.name,
-        creator: options.creator,
-        playerLimit: options.playerLimit,
-        playerCount: 0,
-        gameMode: options.gamemodeName,
-        requirePassword: false,
-        address: "http://localhost",
-        port: port
-    };
-    var fork = require('child_process').fork;
-    //We start a Lobby process and we send the port
-    var child = fork('lobby', [port, configPath, GameServerPort]);
-    return lobby;
-  }
+    function createLobby(id, options, port, configPath, gameServerPort) {
+        const lobby = {
+            id: id,
+            name: options.name,
+            owner: options.owner,
+            playerLimit: options.playerLimit,
+            playerCount: 0,
+            gamemodeName: options.gamemodeName,
+            requirePassword: false,
+            address: "http://localhost",
+            port: port
+        };
+        //We start a Lobby process and we send the port
+        const child = child_process.fork('lobby', [JSON.stringify(lobby), port, configPath, gameServerPort]);
+        return lobby;
+    }
 }
 module.exports = LobbyFactory();

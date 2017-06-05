@@ -1,30 +1,28 @@
 var fs = require("fs");
 var child_process = require("child_process");
 
-exports.startGameServer = function(players, gameServerPort, path, map) {
-    if (players != null){
+exports.startGameServer = function (players, gameServerPort, path, map, lobbyServerPath) {
+    if (players) {
         var config = fs.readFileSync("./Config/config.json");
         var configData = JSON.parse(config);
         var objToJSON = new Object();
         objToJSON.players = new Array();
         objToJSON.game = new Object();
         objToJSON.gameInfo = new Object();
-        var count = 0;
-        var max = players.length - 1;
-        while (count <= max){
-            objToJSON.players[count] = new Object();
-            objToJSON.players[count]["runes"] = new Object();
-            objToJSON.players[count].rank = "DIAMOND";
-            objToJSON["players"][count].name = players[count].name;
-            objToJSON["players"][count].champion = dictChamps[players[count].championId];
-            objToJSON["players"][count].team = dictTeams[players[count].teamId];
-            objToJSON["players"][count].skin = players[count].skinIndex;
-            objToJSON["players"][count].summoner1 = "HEAL";
-            objToJSON["players"][count].summoner2 = "FLASH";
-            objToJSON["players"][count].ribbon = 2;
-            objToJSON["players"][count].icon = 0;
-            objToJSON["players"][count]["runes"] = fillRune();
-            count++;
+        const max = players.length - 1;
+        for (let i = 0; i < max; i++) {
+            objToJSON.players[i] = {
+                rank: "DIAMOND",
+                name: players[i].username,
+                champion: dictChamps[players[i].championId],
+                team: dictTeams[players[i].teamId],
+                skin: players[i].skinId,
+                summoner1: "SummonerHeal",
+                summoner2: "SummonerFlash",
+                ribbon: 2,
+                icon: 0,
+                runes: fillRune()
+            };
         }
         objToJSON["game"]["map"] = map;
         objToJSON["game"]["gameMode"] = "LeagueSandbox-Default";
@@ -34,28 +32,28 @@ exports.startGameServer = function(players, gameServerPort, path, map) {
         objToJSON["gameInfo"]["MINION_SPAWNS_ENABLED"] = true;
         var args = [];
         args[0] = "--config"
-        args[1] =  __dirname  + "/config/GameInfo.json"
+        args[1] = lobbyServerPath + "/config/GameInfo.json"
         args[2] = "--port";
         args[3] = gameServerPort;
         var readyToJSON = JSON.stringify(objToJSON);
-        fs.writeFile("./config/GameInfo.json", readyToJSON, (err) => {
+        fs.writeFile("././config/GameInfo.json", readyToJSON, (err) => {
             if (err) throw err;
-                child_process.execFile(path, args, {cwd: configData.pathToFolder, maxBuffer: 1024 * 90000}, (error) => {
-                    if (error){
-                        throw error;
-                    }
-                });
+            child_process.execFile(path, args, { cwd: configData.pathToFolder, maxBuffer: 1024 * 90000 }, (error) => {
+                if (error) {
+                    throw error;
+                }
+            });
         });
-    }   
+    }
 }
-function fillRune(){
-    const runes = new Array();
-    for (let i = 1; i <= 30; i++){
-        if (i < 10){
-            runes[i.toString()] = 5245; 
-        }else if (i < 19){
+function fillRune() {
+    const runes = {};
+    for (let i = 1; i <= 30; i++) {
+        if (i < 10) {
+            runes[i.toString()] = 5245;
+        } else if (i < 19) {
             runes[i.toString()] = 5317;
-        }else if (i <= 31){
+        } else if (i <= 31) {
             runes[i.toString()] = 5289;
         }
     }

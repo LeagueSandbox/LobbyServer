@@ -1,39 +1,40 @@
-var LobbyFactory = require('../factories/LobbyFactory');
-var lobbies = [];
-var lobbyCount = 1234;
-var gameServerPort = 13565;
+const LobbyFactory = require('../factories/LobbyFactory');
+const lobbies = [];
+let lobbyCount = 0;
+let lobbyPort = 20000;
+let gameServerPort = 13565;
 
-function LobbyManagerService(){
+function LobbyManagerService() {
 
-  return {
-    getLobbies: getLobbies,
-    create: create
-  };
+    return { getLobbies, create, getLobbyById, removeLobbyFromList };
 
-  function create(options, configPath){
-    var newLobbyId = lobbyCount;
-    module.exports.lobbyCount = lobbyCount;
-    var newLobby = LobbyFactory.createLobby(options, lobbyCount, configPath, gameServerPort);
-    newLobby.id = newLobbyId;
-    lobbyCount++;
-    gameServerPort++;
+    function create(options, configPath) {
+        const newLobbyId = lobbyCount;
+        const newLobby = LobbyFactory.createLobby(newLobbyId, options, lobbyPort, configPath, gameServerPort);
+        lobbyPort++;
+        lobbyCount++;
+        gameServerPort++;
 
-    addLobbyToList(newLobby);
+        addLobbyToList(newLobby);
 
-    return newLobby;
-  }
+        return newLobby;
+    }
 
-  function getLobbies(){
-    return lobbies;
-  }
+    function getLobbies() {
+        return lobbies;
+    }
 
-  function addLobbyToList(lobby){
-    lobbies.push(lobby);
-  }
+    function addLobbyToList(lobby) {
+        lobbies.push(lobby);
+    }
 
-  function removeLobbyFromList(lobby){
-    lobbies.splice(lobbies.indexOf(lobby), 1);
-  }
+    function removeLobbyFromList(lobby) {
+        lobbies.splice(lobbies.indexOf(lobby), 1);
+    }
+
+    function getLobbyById(lobbyId) {
+        return lobbies.find(x => x.id === lobbyId);;
+    }
 }
 
 module.exports = LobbyManagerService();
