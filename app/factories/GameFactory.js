@@ -9,8 +9,8 @@ exports.startGameServer = function (players, gameServerPort, path, map, lobbySer
         objToJSON.players = new Array();
         objToJSON.game = new Object();
         objToJSON.gameInfo = new Object();
-        const max = players.length - 1;
-        for (let i = 0; i < max; i++) {
+        console.log(players)
+        for (let i = 0; i < players.length; i++) {
             objToJSON.players[i] = {
                 rank: "DIAMOND",
                 name: players[i].username,

@@ -251,7 +251,7 @@ function startGame() {
         let verifiedPlayers = 0;
         for (let i = 0; i < players.length; i++) {
             if (players[i].championId !== null) {
-                if (players[i].skinId === null) {
+                if (!players[i].skinId) {
                     players[i].skinId = 0;
                 }
                 verifiedPlayers++;
