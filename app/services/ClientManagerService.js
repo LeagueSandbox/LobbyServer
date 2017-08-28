@@ -1,18 +1,32 @@
-function ClientManagerService(){
-  var clients = [];
+const ClientFactory = require('../factories/ClientFactory');
 
-  return {
-    connected: connected,
-    disconnected: disconnected,
-  };
+function ClientManagerService() {
+    const clients = [];
 
-  function connected(client){
-    clients.push(client);
-  }
+    return { connected, disconnected, setUserProfile, create, getClients };
 
-  function disconnected(client){
-    clients.splice(clients.indexOf(client), 1);
-  }
+    function connected(client) {
+        clients.push(client);
+    }
+
+    function setUserProfile(client, data) {
+        clients[clients.indexOf(client)].username = data.username;
+        clients[clients.indexOf(client)].iconId = data.iconId;
+    }
+
+    function create(client) {
+        return ClientFactory.createClient(clients[clients.indexOf(client)]);
+    }
+
+    function disconnected(client) {
+        clients.splice(clients.indexOf(client), 1);
+    }
+
+    function getClients() {
+        const clientsBuilt = [];
+        Object.keys(clients).map(key => clientsBuilt.push(ClientFactory.createClient(clients[key])))
+        return clientsBuilt;
+    }
 }
 
 module.exports = ClientManagerService();
