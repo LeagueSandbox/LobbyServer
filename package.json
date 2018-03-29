@@ -13,7 +13,7 @@
   "author": "League Sandbox",
   "license": "GPL-3.0",
   "dependencies": {
-    "socket.io": "^2.0.0"
+    "socket.io": "^2.1.0"
   },
   "bugs": {
     "url": "https://github.com/LeagueSandbox/LobbyServer/issues"
